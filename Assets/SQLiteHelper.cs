@@ -25,27 +25,23 @@ public class SQLiteHelper : MonoBehaviour
 
 
         // 赋值sql语句
-        // command.CommandText = "SELECT * FROM buff WHERE Id=5005 and LEVEL=20";
+        command.CommandText = "SELECT * FROM buff WHERE Id=5005 and LEVEL=20";
         // SELECT name FROM sqlite_master
-        command.CommandText = "SELECT name FROM sqlite_master";
+        //command.CommandText = "SELECT name FROM sqlite_master";
 
 
         // 执行读取数据
         SqliteDataReader reader = command.ExecuteReader();
         while (reader.Read())
         {
-            /**
             var id = reader.GetInt32(reader.GetOrdinal("Id"));
             var level = reader.GetInt32(reader.GetOrdinal("Level"));
             var name = reader.GetString(reader.GetOrdinal("Name"));
             var desc = reader.GetString(reader.GetOrdinal("Desc"));
 
             Debug.Log(string.Format("id = {0}, level = {1}, name = {2}, desc = {3}", id, level, name, desc));
-            **/
-            var name = reader.GetString(reader.GetOrdinal("name"));
-            Debug.Log(name);
-        }
 
+        } 
 
         // 关闭数据库
         reader.Close();
