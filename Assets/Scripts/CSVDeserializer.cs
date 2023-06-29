@@ -9,6 +9,11 @@ public class CSVDeserializer : MonoBehaviour
     public string csvFilePath;
     private Dictionary<string, Buff> dataObjects;// CSV文件路径
 
+    private void Start()
+    {
+        csvFilePath = Application.persistentDataPath + "/buff.csv";
+    }
+
 
     public void DeserializeCSV()
     {
@@ -27,9 +32,10 @@ public class CSVDeserializer : MonoBehaviour
 
     public void FindDemo()
     {
+        UnityEngine.Profiling.Profiler.BeginSample("Mono Select");
         if (dataObjects == null) DeserializeCSV();
         var dataObject = dataObjects[string.Format("{0}/{1}", 5005, 20)];
         Debug.Log(string.Format("id = {0}, level = {1}, name = {2}, desc = {3}", dataObject.Id, dataObject.Level, dataObject.Name, dataObject.Desc));
-        
+        UnityEngine.Profiling.Profiler.EndSample();
     }
 }

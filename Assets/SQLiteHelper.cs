@@ -35,11 +35,13 @@ public class SQLiteHelper : MonoBehaviour
 
     public void SelectDemo()
     {
-        Debug.Log(dbPath);
+        //Debug.Log(dbPath);
 
+        UnityEngine.Profiling.Profiler.BeginSample("SQLite Select");
         SelectBuff("5005", "20");
-        SelectNpc("56504");
-        SelectSkill("9055");
+        UnityEngine.Profiling.Profiler.EndSample();
+        //SelectNpc("56504");
+        //SelectSkill("9055");
 
     }
 
