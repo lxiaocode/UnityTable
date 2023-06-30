@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
-
+using UnityEngine.Profiling;
 public class CSVDeserializer : MonoBehaviour
 {
-    public string csvFilePath;
+    private string csvFilePath;
     private Dictionary<string, Buff> dataObjects;// CSV文件路径
 
     private void Start()
@@ -17,17 +17,19 @@ public class CSVDeserializer : MonoBehaviour
 
     public void DeserializeCSV()
     {
+        Profiler.BeginSample("DeserializeCSV");
         dataObjects = new Dictionary<string, Buff>();
         using (StreamReader reader = new StreamReader(csvFilePath))
         using (CsvReader csvReader = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
         {
             while (csvReader.Read())
             {
-                Buff dataObject = csvReader.GetRecord<Buff>();
+                var dataObject = csvReader.GetRecord<Buff>();
                 dataObjects.Add(string.Format("{0}/{1}", dataObject.Id, dataObject.Level), dataObject);
             }
         }
         Debug.Log("DeserializeCSV sucess");
+        Profiler.EndSample();
     }
 
     public void FindDemo()
