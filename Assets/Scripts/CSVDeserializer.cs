@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using CsvHelper;
@@ -6,16 +7,26 @@ using CsvHelper.Configuration;
 using UnityEngine.Profiling;
 public class CSVDeserializer : MonoBehaviour
 {
-    private string csvFilePath = Application.persistentDataPath + "/buff.csv";
+    private string csvFilePath;
     private Dictionary<string, Buff> dataObjects;// CSV文件路径
 
 
+    private void Start()
+    {
+#if UNITY_EDITOR
+        csvFilePath = "buff.csv";
+#else
+		csvFilePath = Application.persistentDataPath + "/buff.csv";
+#endif
+    }
+
     public void DeserializeCSV()
     {
+
         Profiler.BeginSample("DeserializeCSV");
         dataObjects = new Dictionary<string, Buff>();
         using (StreamReader reader = new StreamReader(csvFilePath))
-        using (CsvReader csvReader = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
+        using (CsvReader csvReader = new CsvReader(reader))
         {
             while (csvReader.Read())
             {
